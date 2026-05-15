@@ -1,0 +1,5 @@
+*.ipynb
+data
+.env
+embeddings
+hashes.json
