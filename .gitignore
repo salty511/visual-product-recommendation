@@ -3,3 +3,6 @@ data
 .env
 embeddings
 hashes.json
+.venv
+shopping.webp
+__pycache__
