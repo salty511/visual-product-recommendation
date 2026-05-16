@@ -10,7 +10,7 @@ def calculate_cosine_scores(em_1, embeddings):
     for embedding in tqdm(embeddings):
         em_2 = torch.load(os.path.join("embeddings/clean", f"{embedding}"))
         similarity_score = cosine_similarity(em_1, em_2, dim=1).item()
-        if(similarity_score > 0.2):
+        if(similarity_score > 0.7):
             cosine_scores[embedding[:-3]] = similarity_score
     return cosine_scores
 
@@ -24,13 +24,12 @@ if __name__ == "__main__":
     embedding_files = sorted(os.listdir("embeddings/clean"))
     embedding_by_image = {f.replace(".pt", ""): f for f in embedding_files}
 
-    # pick a test image from the same set
     image_name = sorted(os.listdir("data/clean"))[0]
     image_path = os.path.join("shopping.webp")
 
     em_1 = infer(image_path)
 
-    cosine_scores = calculate_cosine_scores(em_1, embeddings[:10])
+    cosine_scores = calculate_cosine_scores(em_1, embeddings)
     
     print(cosine_scores)
 

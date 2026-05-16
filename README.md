@@ -6,9 +6,11 @@ This repo contains
 
 ## Data Processing & Cleaning
 
-There is not much pre-processing required for this project as the transformers library handles a lot of this automatically. However the dataset does contain some empty images (size (1, 1)) so these have been removed from the dataset in production.
+There is not much pre-processing required for this project as the transformers library handles a lot of this automatically. However the dataset does contain some empty images (size (1, 1)) so these have been removed from the dataset in production. There are also quite a lot of duplicate images, around 20,000 out of the 50,000 original images. To remove these I ran a python tool called find-dups and wrote a script to filter the duplicate and empty images in `src/data.py`.
 
 ## Storing Embeddings
+
+Originally I
 
 ## Exploring ANN Methods
 
