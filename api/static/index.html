@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Similarity Search</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <h1>Visual Product Search</h1>
+        <p>Upload a product image to find visually similar catalog items.</p>
+      </header>
+
+      <section class="card controls">
+        <form id="search-form">
+          <label for="image-input">Choose an image</label>
+          <input id="image-input" name="file" type="file" accept="image/png,image/jpeg,image/webp" required />
+          <button type="submit">Search Similar Images</button>
+        </form>
+        <div id="status" aria-live="polite"></div>
+      </section>
+
+      <section class="card preview-wrap">
+        <h2>Query Preview</h2>
+        <img id="preview" alt="Selected query preview" />
+      </section>
+
+      <section class="results-wrap">
+        <h2>Results</h2>
+        <div id="results" class="results-grid"></div>
+      </section>
+    </main>
+
+    <template id="result-template">
+      <article class="result-card">
+        <img alt="Similarity result image" class="result-image" />
+        <div class="result-meta">
+          <span class="result-score"></span>
+          <span class="result-src"></span>
+        </div>
+      </article>
+    </template>
+
+    <script src="/static/app.js"></script>
+  </body>
+  </html>

@@ -1,0 +1,158 @@
+:root {
+  --bg: #f2f6f8;
+  --surface: #ffffff;
+  --text: #1d2a33;
+  --muted: #5e6f7a;
+  --brand: #00757c;
+  --brand-strong: #005f65;
+  --border: #d5e0e5;
+  --shadow: 0 8px 20px rgba(8, 41, 61, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at 0% 0%, #d9edf0 0, transparent 45%),
+    radial-gradient(circle at 100% 100%, #f9e9d4 0, transparent 40%),
+    var(--bg);
+}
+
+.page {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+.hero {
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: -0.03em;
+}
+
+.hero p {
+  margin-top: 0.5rem;
+  color: var(--muted);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.controls form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+label {
+  font-weight: 700;
+}
+
+input[type="file"] {
+  border: 1px dashed #9eb0bc;
+  border-radius: 10px;
+  padding: 0.7rem;
+  background: #f9fcfd;
+}
+
+button {
+  width: fit-content;
+  border: none;
+  border-radius: 10px;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 700;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+
+button:hover {
+  background: var(--brand-strong);
+}
+
+#status {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  min-height: 1.2rem;
+}
+
+.preview-wrap img {
+  width: min(100%, 280px);
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #eef4f6;
+}
+
+.results-wrap h2,
+.preview-wrap h2 {
+  margin-bottom: 0.75rem;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.9rem;
+}
+
+.result-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  animation: rise 260ms ease both;
+}
+
+.result-image {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: #e7eef1;
+}
+
+.result-meta {
+  padding: 0.6rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.result-score {
+  font-weight: 700;
+}
+
+.result-src {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding-top: 1.2rem;
+  }
+}
