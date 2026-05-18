@@ -4,35 +4,57 @@ import torch
 from torch.nn.functional import cosine_similarity
 import numpy as np
 import os
+from dotenv import load_dotenv
+from src.data import run_data_pipline
+from src.embeddings import generate_embeddings
+from PIL import Image
+import matplotlib.pyplot as plt
 
-def calculate_cosine_scores(em_1, embeddings):
-    cosine_scores = {}
-    for embedding in tqdm(embeddings):
-        em_2 = torch.load(os.path.join("embeddings/clean", f"{embedding}"))
-        similarity_score = cosine_similarity(em_1, em_2, dim=1).item()
-        if(similarity_score > 0.7):
-            cosine_scores[embedding[:-3]] = similarity_score
-    return cosine_scores
+load_dotenv()
 
-if __name__ == "__main__":
-    images = sorted(os.listdir("data/clean"))
-    embeddings = sorted(os.listdir("embeddings/clean"))
+IMAGES_PATH = os.path.join(os.path.dirname(__file__), 'data/clean')
+EMBEDDINGS_PATH = os.path.join(os.path.dirname(__file__), 'embeddings_stacked.pt')
+EMBEDDING_NAMES_PATH = os.path.join(os.path.dirname(__file__), 'embedding_names.txt')
 
-    print(images[0])
-    print(embeddings[0])
+def calculate_cosine_scores(em_1, E, embedding_names):
+    print("Calculating Cosine Similarity")
+    print(em_1.shape, E.shape)
+    scores = cosine_similarity(em_1, E, dim=1)
+    mask = scores > 0.7
+    return {embedding_names[i][:-4]: scores[i].item() for i in mask.nonzero().flatten().tolist()}
 
-    embedding_files = sorted(os.listdir("embeddings/clean"))
-    embedding_by_image = {f.replace(".pt", ""): f for f in embedding_files}
+def run_search_example():
+    with open(EMBEDDING_NAMES_PATH, "r") as f:
+        embedding_names = f.readlines()
 
-    image_name = sorted(os.listdir("data/clean"))[0]
-    image_path = os.path.join("shopping.webp")
+    image_path = os.path.join(IMAGES_PATH, embedding_names[0][:-4])
+    E = torch.load(EMBEDDINGS_PATH)
 
     em_1 = infer(image_path)
 
-    cosine_scores = calculate_cosine_scores(em_1, embeddings)
+    cosine_scores = calculate_cosine_scores(em_1, E, embedding_names)
+
+    cosine_scores = [[k, v] for k, v in sorted(cosine_scores.items(), key=lambda x: x[1], reverse=True)]
+
+    fig, axs = plt.subplots(1, 5, figsize=(15, 9))
+
+    im = np.asarray(Image.open(image_path))
+    axs[0].imshow(im)
+    axs[0].set_axis_off()
     
-    print(cosine_scores)
+    for i in range(1, 5):
+        print(cosine_scores[i])
+        im = np.asarray(Image.open(os.path.join(IMAGES_PATH, cosine_scores[i][0])))
+        axs[i].imshow(im)
+        axs[i].set_axis_off()
+    
+    plt.show()
 
-    cosine_scores = {k: v for k, v in sorted(cosine_scores.items(), key=lambda x: x[1], reverse=True)}
+if __name__ == "__main__":
+    mode = os.getenv("mode")
+    print(mode)
 
-    print(cosine_scores)
+    if(mode == "setup"):
+        run_data_pipline()
+        generate_embeddings()
+    run_search_example()

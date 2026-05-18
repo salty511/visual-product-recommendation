@@ -12,6 +12,8 @@ There is not much pre-processing required for this project as the transformers l
 
 Originally I was simply loading the embeddings into a big list and iterating through calculating the cosine similarity between each vector and the query vector one by one. The first improvement I made to this is stacking the embeddings into one big tensor and computing the similarity vectorised. This speeds up queries dramatically, going from around 20 secs to 2 secs.
 
+This also meant I could store the large tensor in one file instead of a bunch of individual files. This also speeds up loading time dramatically however I now have to store the file names separately and make sure the order stays in tact.
+
 ## Storing Embeddings
 
 Originally I

@@ -12,7 +12,8 @@ from fastapi.staticfiles import StaticFiles
 app = FastAPI()
 
 IMAGES_PATH = os.path.join(os.path.dirname(__file__), '../data/clean')
-EMBEDDINGS_PATH = os.path.join(os.path.dirname(__file__), '../embeddings/clean')
+EMBEDDINGS_PATH = os.path.join(os.path.dirname(__file__), '../embeddings_stacked.pt')
+EMBEDDING_NAMES_PATH = os.path.join(os.path.dirname(__file__), '../embedding_names.txt')
 STATIC_PATH = os.path.join(os.path.dirname(__file__), './static')
 MAX_FILE_SIZE = 8 * 1024 * 1024  # 8MB
 ALLOWED_TYPES = {"image/jpeg", "image/png", "image/webp"}
@@ -27,14 +28,14 @@ model = AutoModel.from_pretrained("google/vit-base-patch16-224", device_map="aut
 
 model.eval()
 
-embedding_names = os.listdir(EMBEDDINGS_PATH)
+with open(EMBEDDING_NAMES_PATH, "r") as f:
+    embedding_names = f.readlines()
+
+print(embedding_names[0])
 
 def load_embeddings():
-    embed_map = {}
     print("Loading Embeds")
-    for em in tqdm(embedding_names):
-        embed_map[em] = torch.load(os.path.join(EMBEDDINGS_PATH, f"{em}"))
-    E = torch.stack([embed_map[em].squeeze(0) for em in embedding_names])
+    E = torch.load(EMBEDDINGS_PATH)
     return E
 
 def infer(image):
@@ -48,7 +49,7 @@ def calculate_cosine_scores(em_1, E):
     print(em_1.shape, E.shape)
     scores = cosine_similarity(em_1, E, dim=1)
     mask = scores > 0.7
-    return {embedding_names[i][:-3]: scores[i].item() for i in mask.nonzero().flatten().tolist()}
+    return {embedding_names[i][:-4]: scores[i].item() for i in mask.nonzero().flatten().tolist()}
 
 E = load_embeddings()
 
@@ -78,7 +79,6 @@ def search(file: UploadFile):
     print(cosine_scores)
 
     return res
-
 
 if __name__ == "__main__":
     import uvicorn
