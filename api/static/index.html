@@ -4,32 +4,59 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Image Similarity Search</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
   <body>
     <main class="page">
       <header class="hero">
         <h1>Visual Product Search</h1>
-        <p>Upload a product image to find visually similar catalog items.</p>
+        <p>Upload a product image to find visually similar items.</p>
       </header>
 
       <section class="card controls">
         <form id="search-form">
           <label for="image-input">Choose an image</label>
-          <input id="image-input" name="file" type="file" accept="image/png,image/jpeg,image/webp" required />
+          <input id="image-input" name="file" type="file" accept="image/png,image/jpeg,image/webp,image/avif" required />
+          <fieldset class="mode-group">
+            <legend>Search mode</legend>
+            <label class="mode-option">
+              <input type="radio" name="search-mode" value="cosine" checked />
+              <span>Cosine Vectorised</span>
+            </label>
+            <label class="mode-option">
+              <input type="radio" name="search-mode" value="hnsw" />
+              <span>HNSW K-NN</span>
+            </label>
+          </fieldset>
+          <div class="k-control" aria-live="polite" hidden>
+            <label for="knn-k">K (neighbors)</label>
+            <div class="k-slider">
+              <input id="knn-k" name="knn-k" type="range" min="1" max="50" step="1" value="10" />
+              <span id="knn-k-value">10</span>
+            </div>
+          </div>
           <button type="submit">Search Similar Images</button>
         </form>
-        <div id="status" aria-live="polite"></div>
+        <div id="time" aria-live="polite" hidden></div>
+        <div id="status" aria-live="polite" hidden></div>
       </section>
 
       <section class="card preview-wrap">
         <h2>Query Preview</h2>
-        <img id="preview" alt="Selected query preview" />
+        <img id="preview" alt="Selected query preview" hidden/>
       </section>
 
       <section class="results-wrap">
         <h2>Results</h2>
         <div id="results" class="results-grid"></div>
+        <br>
+        <button id="see-more" hidden>See More</button>
       </section>
     </main>
 

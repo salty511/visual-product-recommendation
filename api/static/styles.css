@@ -1,12 +1,12 @@
 :root {
-  --bg: #f2f6f8;
+  --bg: #f3f5f9;
   --surface: #ffffff;
-  --text: #1d2a33;
-  --muted: #5e6f7a;
-  --brand: #00757c;
-  --brand-strong: #005f65;
-  --border: #d5e0e5;
-  --shadow: 0 8px 20px rgba(8, 41, 61, 0.08);
+  --text: #1f2a37;
+  --muted: #5a6b7d;
+  --brand: #2f6ea5;
+  --brand-strong: #245985;
+  --border: #d6dee8;
+  --shadow: 0 8px 20px rgba(23, 44, 69, 0.1);
 }
 
 * {
@@ -17,9 +17,7 @@ body {
   margin: 0;
   color: var(--text);
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
-  background: radial-gradient(circle at 0% 0%, #d9edf0 0, transparent 45%),
-    radial-gradient(circle at 100% 100%, #f9e9d4 0, transparent 40%),
-    var(--bg);
+  background: var(--bg);
 }
 
 .page {
@@ -57,15 +55,62 @@ body {
   gap: 0.75rem;
 }
 
+.mode-group {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem;
+  display: grid;
+  gap: 0.5rem;
+  background: #f7f9fc;
+}
+
+.mode-group legend {
+  font-weight: 700;
+  padding: 0 0.4rem;
+}
+
+.mode-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.mode-option input {
+  accent-color: var(--brand);
+}
+
+.k-control {
+  gap: 0.4rem;
+}
+
+.k-slider {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.k-slider input[type="range"] {
+  width: min(320px, 100%);
+  accent-color: var(--brand);
+}
+
+#knn-k-value {
+  font-weight: 700;
+  min-width: 2ch;
+  text-align: right;
+}
+
 label {
   font-weight: 700;
 }
 
 input[type="file"] {
-  border: 1px dashed #9eb0bc;
+  border: 1px dashed var(--border);
   border-radius: 10px;
   padding: 0.7rem;
-  background: #f9fcfd;
+  background: #f8fbff;
 }
 
 button {
@@ -90,18 +135,25 @@ button:hover {
   min-height: 1.2rem;
 }
 
+#time {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  min-height: 1.2rem;
+}
+
 .preview-wrap img {
   width: min(100%, 280px);
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 12px;
   border: 1px solid var(--border);
-  background: #eef4f6;
+  background: #e8eef5;
 }
 
-.results-wrap h2,
 .preview-wrap h2 {
   margin-bottom: 0.75rem;
+  padding-top: 0;
+  margin-top: 0;
 }
 
 .results-grid {
@@ -122,7 +174,7 @@ button:hover {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
-  background: #e7eef1;
+  background: #eaf1f7;
 }
 
 .result-meta {

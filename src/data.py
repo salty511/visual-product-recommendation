@@ -21,7 +21,6 @@ def remove_dupes(
 
 	os.makedirs(clean_dir, exist_ok=True)
 
-	missing = []
 	copied = []
 	for name in tqdm(sorted(os.listdir(images_dir)), desc="Copying clean"):
 		src_path = os.path.join(images_dir, name)
@@ -41,14 +40,11 @@ def remove_dupes(
 			if os.path.exists(src_path):
 				shutil.copy2(src_path, dst_path)
 				copied.append(name)
-			else:
-				missing.append(name)
 
 	return {
 		"keep_count": len(keep),
 		"remove_count": len(remove),
 		"copied": copied,
-		"missing": missing,
 		"clean_dir": clean_dir,
 	}
 
@@ -56,5 +52,4 @@ def run_data_pipline():
 	result = remove_dupes()
 	print(
 		f"Copied {len(result['copied'])} clean images to {result['clean_dir']}; "
-		f"{len(result['missing'])} missing on disk."
 	)

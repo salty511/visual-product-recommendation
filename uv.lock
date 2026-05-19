@@ -906,6 +906,25 @@ wheels = [
 ]
 
 [[package]]
+name = "nmslib"
+version = "2.1.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "pybind11" },
+    { name = "scipy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ad/d8/4fd9c4054c70ad4dc798b7d7779d4825b300a4f8155e3afc60492fb5bee7/nmslib-2.1.2.tar.gz", hash = "sha256:6194e6ee4aa3dc561525c6974043483704f71f30d7cb5971b90145ae1f13921c", size = 197164, upload-time = "2025-10-23T15:07:41.544Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2a/37/74e1adece14862ff57e7fe65b75582d3a79dd0e2521fc0673384e7ea6055/nmslib-2.1.2-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:151d67638392c730d3c4f2821142aeb55a6d16d7dcb1fda5ee1599343c6fc65e", size = 995263, upload-time = "2025-10-24T00:41:16.611Z" },
+    { url = "https://files.pythonhosted.org/packages/67/26/ae299116df773ed252f438536ef605efe0c76543694e9bce49abb4f83583/nmslib-2.1.2-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:b7531c83e9e64132f56ea5f507ed701221264de08bcd0414c8fd021f9c588956", size = 1052469, upload-time = "2025-10-23T14:34:41.242Z" },
+    { url = "https://files.pythonhosted.org/packages/70/ac/fed8b9520d7a073c6b034b98a098eca909916af0a3e37b717d1e073cc2d5/nmslib-2.1.2-cp314-cp314-win_amd64.whl", hash = "sha256:40af20f2ac3f2dd89ade27452ab91e71ebe8599de7ca093edad1187b19c23578", size = 493337, upload-time = "2025-10-24T00:41:18.748Z" },
+    { url = "https://files.pythonhosted.org/packages/32/3c/2e7ad98ba8ee6ad53bc7b12759f7967eafebe8f8abd8df92d045c051aa6e/nmslib-2.1.2-cp314-cp314-win_arm64.whl", hash = "sha256:4fc7f3ec4a9b7d53a9b9e7a999c162cda5472a5575987236552440091d969490", size = 484941, upload-time = "2025-10-24T00:41:20.231Z" },
+    { url = "https://files.pythonhosted.org/packages/db/e1/8798a0eae532c591cc26a65643ed5d25b355298a8823b8f2324261aec7a9/nmslib-2.1.2-cp314-cp314t-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:b6d8444117332e74c9c1e1c7f807bf01f86a669061c0b66326e82d0d601c8bd4", size = 995995, upload-time = "2025-10-24T00:41:22.182Z" },
+    { url = "https://files.pythonhosted.org/packages/2d/c7/d106eae9309a5a3cb1ecc29e2ee6345541b29a4ddda4f9ec4103d8a38e38/nmslib-2.1.2-cp314-cp314t-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:55928016c31ee75ff0a704a39711b3da6993aa66ecd239842c518d224e4bee65", size = 1052740, upload-time = "2025-10-24T00:41:25.467Z" },
+]
+
+[[package]]
 name = "numpy"
 version = "2.4.4"
 source = { registry = "https://pypi.org/simple" }
@@ -1233,6 +1252,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/cd/05/0a34433a064256a578f1783a10da6df098ceaa4a57bbeaa96a6c0352786b/pure_eval-0.2.3.tar.gz", hash = "sha256:5f4e983f40564c576c7c8635ae88db5956bb2229d7e9237d03b3c0b0190eaf42", size = 19752, upload-time = "2024-07-21T12:58:21.801Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8e/37/efad0257dc6e593a18957422533ff0f87ede7c9c6ea010a2177d738fb82f/pure_eval-0.2.3-py3-none-any.whl", hash = "sha256:1db8e35b67b3d218d818ae653e27f06c3aa420901fa7b081ca98cbedc874e0d0", size = 11842, upload-time = "2024-07-21T12:58:20.04Z" },
+]
+
+[[package]]
+name = "pybind11"
+version = "3.0.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/cc/f0/35145a3c3baffeef55d4b8324caa33abaa8fa56ab345ecd4b2211d09163e/pybind11-3.0.4.tar.gz", hash = "sha256:3286b59c8a774b9ee650169302dd5a4eedc30a8617905a0560dd8ee44775130c", size = 589533, upload-time = "2026-04-19T03:08:15.925Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b3/06/c3a23c9a0263b136c519f033a58d4641e73065fefc7754e9667ec206d992/pybind11-3.0.4-py3-none-any.whl", hash = "sha256:961720ee652da51d531b7b2451a6bd2bc042b0106e6d9baa48ecb7d58034ce63", size = 314166, upload-time = "2026-04-19T03:08:14.091Z" },
 ]
 
 [[package]]
@@ -1956,6 +1984,7 @@ dependencies = [
     { name = "fastapi", extra = ["standard"] },
     { name = "ipykernel" },
     { name = "matplotlib" },
+    { name = "nmslib" },
     { name = "pillow" },
     { name = "starlette" },
     { name = "torch" },
@@ -1972,6 +2001,7 @@ requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.136.1" },
     { name = "ipykernel", specifier = ">=7.2.0" },
     { name = "matplotlib", specifier = ">=3.10.9" },
+    { name = "nmslib", specifier = ">=2.1.2" },
     { name = "pillow", specifier = ">=12.2.0" },
     { name = "starlette", specifier = "==1.0.0" },
     { name = "torch", specifier = ">=2.12.0" },

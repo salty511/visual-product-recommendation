@@ -12,14 +12,12 @@ There is not much pre-processing required for this project as the transformers l
 
 Originally I was simply loading the embeddings into a big list and iterating through calculating the cosine similarity between each vector and the query vector one by one. The first improvement I made to this is stacking the embeddings into one big tensor and computing the similarity vectorised. This speeds up queries dramatically, going from around 20 secs to 2 secs.
 
-This also meant I could store the large tensor in one file instead of a bunch of individual files. This also speeds up loading time dramatically however I now have to store the file names separately and make sure the order stays in tact.
-
-## Storing Embeddings
-
-Originally I
+This also meant I could store the large tensor in one file instead of a bunch of individual files. This also speeds up loading time dramatically as it cuts down the I/O overhead to one file.
 
 ## Exploring ANN Methods
 
-In the initial stages of the project I was only working with a small subset of the images and simply calculating the cosine similarity on every query. It quickly became apparent that query times would explode as I included more of the original dataset. It also felt very inefficient to do it this way so I started researching how other recommendation systems work in production. I came across a familiy of techniques called Approximate Nearest Neighbors (ANN) and in particly Hierarchical Navigable Small Worlds (HNSW).
+With the imrovements I made, query times were quite low already but I wanted to explore some more sophisticated methods. It also felt quite inefficient to calculate the cosine similarity on every query so I started researching how other recommendation systems work in production. I came across a familiy of techniques called Approximate Nearest Neighbors (ANN) and in particly Hierarchical Navigable Small Worlds (HNSW).
 
-HNSW works by consructing an index structure, much like an index in a standard database that narrow down the search space for a given query vector. The specifics of the method and implementation are beyond the scope of the project however I there are many libraries that implement the method, I'm using a popular one I found called nmslib.
+HNSW works by consructing an index structure, much like an index in a standard database that narrow down the search space for a given query vector. Vectors are added one by one and arranged in a graph structure by their relative inner product (equivilant to similarity for normalised vectors). The specifics of the method and implementation are beyond the scope of the project however I there are many libraries that implement the method, I'm using a popular one I found called nmslib.
+
+I've kept the functionality for both methods, there's a selector in the frontend UI and the query time is displayed for easy comparison between methods. The HNSW method is considerably faster on all test images I've used. This comes at the cost of some accuracy and needing to define k.
