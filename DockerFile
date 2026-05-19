@@ -13,7 +13,6 @@ COPY api/requirements.txt /app/api/requirements.txt
 RUN pip install --no-cache-dir -r /app/api/requirements.txt
 
 COPY api /app/api
-COPY data/clean /app/data/clean
 COPY embeddings_stacked.pt /app/embeddings_stacked.pt
 COPY embedding_names.txt /app/embedding_names.txt
 COPY hnsw_cosine_index.bin /app/hnsw_cosine_index.bin
