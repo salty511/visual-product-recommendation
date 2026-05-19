@@ -4,12 +4,14 @@ import torch
 from tqdm.auto import tqdm
 import os
 from PIL import Image
+import nmslib
+from torch.nn.functional import normalize
 
 load_dotenv()
 
 torch.manual_seed(0)
 
-DEVICE = "cuda"
+DEVICE = os.getenv("device") or "cpu"
 
 processor = AutoImageProcessor.from_pretrained("google/vit-base-patch16-224")
 model = AutoModel.from_pretrained("google/vit-base-patch16-224").to(DEVICE)
@@ -40,7 +42,7 @@ def generate_embeddings():
 
     embedding_names = sorted(os.listdir(EMBEDDINGS_PATH))
 
-    with open(f"embedding_names_{DEVICE}.txt", "w") as f:
+    with open(f"embedding_names.txt", "w") as f:
         f.writelines([f"{name}\n" for name in embedding_names])
 
     embed_map = {}
@@ -50,7 +52,16 @@ def generate_embeddings():
 
     E = torch.stack([embed_map[em].squeeze(0) for em in embedding_names]).float()
 
-    torch.save(E, f"embeddings_stacked_{DEVICE}.pt")
+    torch.save(E, f"embeddings_stacked.pt")
+
+    build_index(E.cpu())
+
+def build_index(E):
+    index = nmslib.init(method='hnsw', space='cosinesimil')
+    E = normalize(E, dim=1)
+    index.addDataPointBatch(E)
+    index.createIndex()
+    index.saveIndex('hnsw_cosine_index.bin')
 
 if __name__ == "__main__":
     generate_embeddings()

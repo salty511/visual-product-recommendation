@@ -11,11 +11,12 @@ import nmslib
 
 app = FastAPI()
 
-DEVICE = "cpu"
+DEVICE = os.getenv("device") or "cpu"
 
 IMAGES_PATH = os.path.join(os.path.dirname(__file__), '../data/clean')
-EMBEDDINGS_STACKED_PATH = os.path.join(os.path.dirname(__file__), f'../embeddings_stacked_cuda.pt')
-EMBEDDING_NAMES_PATH = os.path.join(os.path.dirname(__file__), f'../embedding_names_cuda.txt')
+EMBEDDINGS_STACKED_PATH = os.path.join(os.path.dirname(__file__), f'../embeddings_stacked.pt')
+EMBEDDING_NAMES_PATH = os.path.join(os.path.dirname(__file__), f'../embedding_names.txt')
+INDEX_PATH = os.path.join(os.path.dirname(__file__), f'../hnsw_cosine_index.bin')
 STATIC_PATH = os.path.join(os.path.dirname(__file__), './static')
 MAX_FILE_SIZE = 8 * 1024 * 1024  # 8MB
 ALLOWED_TYPES = {"image/jpeg", "image/png", "image/webp"}
@@ -42,8 +43,7 @@ def load_embeddings():
     E = torch.load(EMBEDDINGS_STACKED_PATH, map_location=torch.device(DEVICE))
     E = E.float()
     E = normalize(E, dim=1)
-    index.addDataPointBatch(E)
-    index.createIndex()
+    index.loadIndex(INDEX_PATH)
     return E
 
 def infer(image):
@@ -76,6 +76,7 @@ def search(file: UploadFile, mode: str = "index", k: int = 5):
     print(file.filename, file.content_type)
     im = Image.open(file.file).convert("RGB")
     em_1 = infer(im)
+    
     res = {"scores": [], "time": 0}
 
     if(mode == "cosine"):
@@ -89,7 +90,7 @@ def search(file: UploadFile, mode: str = "index", k: int = 5):
 
         end = perf_counter()
         res["time"] = end - start
-        print(end - start)
+        print(end - start) 
     else:
         start = perf_counter()
 

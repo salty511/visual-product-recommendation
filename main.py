@@ -11,6 +11,8 @@ import matplotlib.pyplot as plt
 
 load_dotenv()
 
+DEVICE = os.getenv("device") or "cpu"
+
 IMAGES_PATH = os.path.join(os.path.dirname(__file__), 'data/clean')
 EMBEDDINGS_PATH = os.path.join(os.path.dirname(__file__), 'embeddings_stacked.pt')
 EMBEDDING_NAMES_PATH = os.path.join(os.path.dirname(__file__), 'embedding_names.txt')
@@ -27,7 +29,7 @@ def run_search_example():
         embedding_names = f.readlines()
 
     image_path = os.path.join("test_image.avif")
-    E = torch.load(EMBEDDINGS_PATH)
+    E = torch.load(EMBEDDINGS_PATH, map_location=torch.device(DEVICE))
 
     em_1 = infer(image_path)
 
@@ -53,7 +55,7 @@ def run_search_example():
         plt.show()
 
 if __name__ == "__main__":
-    mode = os.getenv("mode")
+    mode = os.getenv("mode") or "search"
     print(mode)
 
     if(mode == "setup"):

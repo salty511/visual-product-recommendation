@@ -53,6 +53,7 @@ function renderResults(data, maxResults) {
   resultsEl.innerHTML = "";
 
   if (data.scores.length < 1) {
+    setTimer(`Query Time: ${(data.time*1000).toFixed(2)} ms`)
     setStatus("No visually similar matches found above threshold.");
     return;
   }
