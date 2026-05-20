@@ -15,11 +15,7 @@ app = FastAPI()
 load_dotenv()
 
 DEVICE = os.getenv("device") or "cpu"
-IMAGES_PREFIX = "https://visual-product-recommendations.s3.eu-north-1.amazonaws.com/clean-images/" if os.getenv("S3") else "/images/" 
 
-print(os.getenv("S3"))
-
-IMAGES_PATH = os.path.join(os.path.dirname(__file__), '../data/clean')
 EMBEDDINGS_STACKED_PATH = os.path.join(os.path.dirname(__file__), f'../embeddings_stacked.pt')
 EMBEDDING_NAMES_PATH = os.path.join(os.path.dirname(__file__), f'../embedding_names.txt')
 INDEX_PATH = os.path.join(os.path.dirname(__file__), f'../hnsw_cosine_index.bin')
@@ -27,7 +23,13 @@ STATIC_PATH = os.path.join(os.path.dirname(__file__), './static')
 MAX_FILE_SIZE = 8 * 1024 * 1024  # 8MB
 ALLOWED_TYPES = {"image/jpeg", "image/png", "image/webp"}
 
-app.mount("/images", StaticFiles(directory=IMAGES_PATH))
+if os.getenv("S3"):
+    IMAGES_PREFIX = "https://visual-product-recommendations.s3.eu-north-1.amazonaws.com/clean-images/"
+else:
+    IMAGES_PATH = os.path.join(os.path.dirname(__file__), '../data/clean')
+    app.mount("/images", StaticFiles(directory=IMAGES_PATH))
+    IMAGES_PREFIX = "/images/"
+
 app.mount("/static", StaticFiles(directory=STATIC_PATH), name="static")
 
 torch.manual_seed(0)
