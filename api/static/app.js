@@ -127,6 +127,7 @@ form.addEventListener("submit", async (event) => {
 
     const data = await response.json();
     state = data
+    console.log(data)
     renderResults(data || [], 5);
     seeMoreButton.hidden = false
   } catch (error) {
