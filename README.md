@@ -12,6 +12,8 @@ For this project, the purpose of the model is to perform feature extraction and 
 
 For this project I chose to use [google/vit-base-patch16-224](https://huggingface.co/google/vit-base-patch16-224). The main reason being is I'm new to vision models and it was used in the example in the transformers documentation. The model was trained for image classification however we can simply skip the final task specific head and read outputs from the final pooling layer to extract features. Since the purpose of the model is just feature extraction I could use a large variety of models designed for more specific tasks and use extract the features in the same way. This makes the chose of model very flexible and I would like to explore this further in future experiments.
 
+Once features are extracted from the model, embeddings can be compared via cosine similiarity, which measures the angle between two vectors. Then choosing a minimum threshold of 0.7, the input image is compared with every other image in the database and images above the threshold are cosidered similar enough to recommend.
+
 ## Data Processing & Cleaning
 
 The dataset consists of 50,000 images of vibrant clothing and is available on kaggle here [here](https://www.kaggle.com/datasets/kaborg15/vibrent-clothes-rental-dataset/data).
