@@ -32,8 +32,6 @@ else:
 
 app.mount("/static", StaticFiles(directory=STATIC_PATH), name="static")
 
-print("Mounted Static Files")
-
 torch.manual_seed(0)
 
 processor = AutoImageProcessor.from_pretrained("google/vit-base-patch16-224")
