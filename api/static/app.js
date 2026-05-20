@@ -45,7 +45,7 @@ function attachImageWithFallback(imgEl, src) {
     imgEl.removeAttribute("src");
   }
 
-  imgEl.src = `/images/${src}`;
+  imgEl.src = `${src}`;
   imgEl.onerror = imageErr;
 }
 

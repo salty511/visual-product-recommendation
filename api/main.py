@@ -8,10 +8,16 @@ from transformers import AutoImageProcessor, AutoModel
 from fastapi.staticfiles import StaticFiles
 from time import perf_counter
 import nmslib
+from dotenv import load_dotenv
 
 app = FastAPI()
 
+load_dotenv()
+
 DEVICE = os.getenv("device") or "cpu"
+IMAGES_PREFIX = "https://visual-product-recommendations.s3.eu-north-1.amazonaws.com/clean-images/" if os.getenv("S3") else "/images/" 
+
+print(os.getenv("S3"))
 
 IMAGES_PATH = os.path.join(os.path.dirname(__file__), '../data/clean')
 EMBEDDINGS_STACKED_PATH = os.path.join(os.path.dirname(__file__), f'../embeddings_stacked.pt')
@@ -86,7 +92,7 @@ def search(file: UploadFile, mode: str = "index", k: int = 5):
         cosine_scores = {k: v for k, v in sorted(cosine_scores.items(), key=lambda x: x[1], reverse=True)}
 
         for key in cosine_scores.keys():
-            res["scores"].append({"src": key, "score": cosine_scores[key]})
+            res["scores"].append({"src": f"{IMAGES_PREFIX}{key}", "score": cosine_scores[key]})
 
         end = perf_counter()
         res["time"] = end - start
@@ -97,7 +103,7 @@ def search(file: UploadFile, mode: str = "index", k: int = 5):
         ids, distances = index.knnQuery(em_1, k=k)
         
         for i in range(k):
-             res["scores"].append({"src": embedding_names[ids[i]][:-4], "score": 1 - distances[i].item()})
+            res["scores"].append({"src": f"{IMAGES_PREFIX}{embedding_names[ids[i]][:-4]}", "score": 1 - distances[i].item()})
 
         end = perf_counter()
         res["time"] = end - start
