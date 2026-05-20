@@ -158,11 +158,12 @@ button:hover {
 
 .results-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 0.9rem;
 }
 
 .result-card {
+  position: relative;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -170,11 +171,43 @@ button:hover {
   animation: rise 260ms ease both;
 }
 
+.result-media {
+  position: relative;
+}
+
 .result-image {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
   background: #eaf1f7;
+}
+
+.result-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(150deg, rgba(31, 42, 55, 0.65), rgba(31, 42, 55, 0.15));
+  opacity: 0;
+  transition: opacity 180ms ease;
+  pointer-events: none;
+}
+
+.result-media:hover .result-overlay,
+.result-media:focus-within .result-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.result-open {
+  background: #ffffff;
+  color: var(--text);
+  border: 1px solid rgba(31, 42, 55, 0.2);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+.result-open:hover {
+  background: #f1f5f9;
 }
 
 .result-meta {

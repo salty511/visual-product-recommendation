@@ -62,10 +62,17 @@ function renderResults(data, maxResults) {
     const node = template.content.firstElementChild.cloneNode(true);
     const image = node.querySelector(".result-image");
     const score = node.querySelector(".result-score");
+    const openButton = node.querySelector(".result-open");
 
     score.textContent = `Score: ${result.score.toFixed(2)}`;
     node.style.animationDelay = `${index * 0.03}s`;
     attachImageWithFallback(image, result.src);
+
+    openButton?.addEventListener("click", (event) => {
+      event.preventDefault();
+      openButton.blur();
+      window.open(result.src, "_blank", "noopener,noreferrer");
+    });
 
     resultsEl.appendChild(node);
   });

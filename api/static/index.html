@@ -62,7 +62,12 @@
 
     <template id="result-template">
       <article class="result-card">
-        <img alt="Similarity result image" class="result-image" />
+        <div class="result-media">
+          <img alt="Similarity result image" class="result-image" />
+          <div class="result-overlay">
+            <button class="result-open" type="button">Open image</button>
+          </div>
+        </div>
         <div class="result-meta">
           <span class="result-score"></span>
           <span class="result-src"></span>
