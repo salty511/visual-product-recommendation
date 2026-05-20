@@ -53,3 +53,6 @@ def run_data_pipline():
 	print(
 		f"Copied {len(result['copied'])} clean images to {result['clean_dir']}; "
 	)
+
+if __name__ == "__main__":
+	
