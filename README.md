@@ -1,6 +1,10 @@
 # Visual Product Recommendation
 
-This repo contains a basic web app that allows users to upload images and performs image similarity search on a database of fashion images. There are also all the required scripts clean the dataset and build the database.
+This repo contains a basic web app that allows users to upload images and performs image similarity search on a database of fashion images. There are also all the required scripts clean the dataset and build the database. I also explore indexing methods for vector databases and Aproximate Nearnest Neighbors search.
+
+<a href="https://visual-product-recommendation-production.up.railway.app/" target="_blank">
+    <img src="https://img.shields.io/badge/Live%20Demo-Railway-red?style=flat-square&logo=railway&logoSize=auto" alt="Live Demo Badge" class="border-none">
+</a>
 
 ## Model Summary
 
@@ -66,7 +70,7 @@ python main.py
 
 This script first builds the clean dataset by removing dupes and empty images, then generates embeddings for each image and saves them to disk, along with a large tensor containing all vectors stacked together. The script also demos a simple search example with `test_image.avif` although I'd reccomend using the web UI as the it's much nicer and has more functionality.
 
-### Run the web app
+### Run the api
 
 ```bash
 cd api
