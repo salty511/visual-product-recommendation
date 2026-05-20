@@ -20,8 +20,6 @@ EMBEDDINGS_STACKED_PATH = os.path.join(os.path.dirname(__file__), f'../embedding
 EMBEDDING_NAMES_PATH = os.path.join(os.path.dirname(__file__), f'../embedding_names.txt')
 INDEX_PATH = os.path.join(os.path.dirname(__file__), f'../hnsw_cosine_index.bin')
 STATIC_PATH = os.path.join(os.path.dirname(__file__), './static')
-MAX_FILE_SIZE = 8 * 1024 * 1024  # 8MB
-ALLOWED_TYPES = {"image/jpeg", "image/png", "image/webp"}
 
 if os.getenv("S3"):
     IMAGES_PREFIX = "https://visual-product-recommendations.s3.eu-north-1.amazonaws.com/clean-images/"
@@ -31,6 +29,8 @@ else:
     IMAGES_PREFIX = "/images/"
 
 app.mount("/static", StaticFiles(directory=STATIC_PATH), name="static")
+
+print(IMAGES_PREFIX)
 
 torch.manual_seed(0)
 
