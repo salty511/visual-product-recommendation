@@ -80,7 +80,7 @@ Set mode to setup if running the embedding pipeline, search if not.
 
 ### Run the Embedding Pipeline
 
-You do not need to run this as the embeddings are already in the repo in `embeddings_stacked_cuda.pt` and images are accessed by name so the raw dataset will work fine. However if you want to remove dupes or generate the embeddings yourself, make sure mode is set to setup and run
+You do not need to run this as the embeddings are already in the repo in `embeddings_stacked.pt` and images are accessed by name so the raw dataset will work fine. However if you want to remove dupes or generate the embeddings yourself, make sure mode is set to setup and run
 
 ```bash
 python main.py
