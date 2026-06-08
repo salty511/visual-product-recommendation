@@ -58,7 +58,13 @@ pip install -r requirements.txt
 
 ### Generating dupes.txt
 
-The `dupes.txt` file containing duplicate image filenames is already included in the repo however if you want to generate `dupes.txt` yourself navigate to `data/images` and run `find-dups . --parallel --progress --hash-db hases.json --group > ../../dupes.txt`. The `--group` option is the most important as this outputs the filenames in groups of like images, rather than pairs of duplicates, which is required for `src/data.py`.
+The `dupes.txt` file containing duplicate image filenames is already included in the repo however if you want to generate `dupes.txt` yourself navigate to `data/images` and run
+
+```bash
+find-dups . --parallel --progress --hash-db hases.json --group > ../../dupes.txt
+```
+
+The `--group` option is the most important as this outputs the filenames in groups of like images, rather than pairs of duplicates, which is required for `src/data.py`
 
 ### Environment Variables
 
