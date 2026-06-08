@@ -14,11 +14,17 @@ For this project I chose to use [google/vit-base-patch16-224](https://huggingfac
 
 Once features are extracted from the model, embeddings can be compared via cosine similiarity, which measures the angle between two vectors. Then choosing a minimum threshold of 0.7, the input image is compared with every other image in the database and images above the threshold are cosidered similar enough to recommend.
 
+## Example Results
+
+See below an example of search results for the test image at `./test_image.avif`. The test image is first from the left, followed by the top 5 recommendations along with their cosine scores.
+
+![](sample_output.png)
+
 ## Data Processing & Cleaning
 
 The dataset consists of 50,000 images of vibrant clothing and is available on kaggle here [here](https://www.kaggle.com/datasets/kaborg15/vibrent-clothes-rental-dataset/data).
 
-There is not much pre-processing required for this project as the transformers library handles a lot of this automatically. However the dataset does contain some empty images (size (1, 1)) so these have been removed from the dataset in production. There are also quite a lot of duplicate images, around 20,000 out of the 50,000 original images. To remove these I ran a python tool called find-dups and wrote a script to filter the duplicate and empty images in `src/data.py`.
+There is not much pre-processing required for this project as the transformers library handles a lot of this automatically. However the dataset does contain some empty images (size (1, 1)) so these have been removed from the dataset in production. There are also quite a lot of duplicate images, around 20,000 out of the 50,000 original images. To remove these I ran a python tool called [duplicate_images](https://pypi.org/project/duplicate_images/). This tool compares image hash values to identify duplicates, and writes the filenames to `dupes.txt`. The script to filter the duplicate and empty images is in `src/data.py`.
 
 This leaves a dataset of around 30,000 images total.
 
@@ -49,6 +55,10 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
+### Generating dupes.txt
+
+The `dupes.txt` file containing duplicate image filenames is already included in the repo however if you want to generate `dupes.txt` yourself navigate to `data/images` and run `find-dups . --parallel --progress --hash-db hases.json --group > ../../dupes.txt`. The `--group` option is the most important as this outputs the filenames in groups of like images, rather than pairs of duplicates, which is required for `src/data.py`.
 
 ### Environment Variables
 

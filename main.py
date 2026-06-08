@@ -21,7 +21,7 @@ def calculate_cosine_scores(em_1, E, embedding_names):
     print("Calculating Cosine Similarity")
     print(em_1.shape, E.shape)
     scores = cosine_similarity(em_1, E, dim=1)
-    mask = scores > 0.5
+    mask = scores > 0.7
     return {embedding_names[i][:-4]: scores[i].item() for i in mask.nonzero().flatten().tolist()}
 
 def run_search_example():
@@ -37,7 +37,7 @@ def run_search_example():
 
     cosine_scores = [[k, v] for k, v in sorted(cosine_scores.items(), key=lambda x: x[1], reverse=True)]
     
-    k = 5 if len(cosine_scores) > 5 else len(cosine_scores)
+    k = 6 if len(cosine_scores) > 5 else len(cosine_scores)
 
     if k > 0:
         fig, axs = plt.subplots(1, k, figsize=(15, 9))
@@ -50,6 +50,7 @@ def run_search_example():
             print(cosine_scores[i])
             im = np.asarray(Image.open(os.path.join(IMAGES_PATH, cosine_scores[i][0])))
             axs[i].imshow(im)
+            axs[i].set_title(round(cosine_scores[i][1], 2))
             axs[i].set_axis_off()
         
         plt.show()
